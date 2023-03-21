@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import type { ThumbnailType } from '../types/Type'
 
 const TextStyle = css`
   text-align: center;
@@ -29,7 +30,7 @@ export const Headline = styled.h1`
     }
   }
 `
-export const Thumbnail = styled.section`
+export const Thumbnail = styled.section<ThumbnailType>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -38,7 +39,7 @@ export const Thumbnail = styled.section`
   width: 768px;
   height: 402px;
   margin: 30px auto;
-  background-color: white;
+  background-color: ${(props) => props.bgColor};
   color: ${(props) => props.color};
   &.active {
     text-shadow: 2px 2px 2px var(--deep-gray);
@@ -49,14 +50,13 @@ export const Title = styled.h2`
   ${TextStyle}
   max-width: 80%;
   font-size: 40px;
-  color: ${(props) => props.color};
 `
 
 export const SubTitle = styled.h3`
   ${TextStyle}
   max-width: 70%;
   font-size: 24px;
-  border-top: 1px solid var(--black);
+  border-top: 1px solid ${(props) => props.color};
   margin-top: 20px;
   padding-top: 14px;
 `
@@ -65,7 +65,7 @@ export const SubHeading = styled.p`
   ${TextStyle}
   position: absolute;
   max-width: 50%;
-  bottom: 50px;
+  bottom: 40px;
 `
 
 export const InputSettings = styled.section`
@@ -83,12 +83,19 @@ export const Input = styled.input`
 `
 
 export const ButtonSettings = styled.section`
+  position: relative;
   display: grid;
   grid-template-columns: 0.8fr repeat(4, 1fr);
   align-items: center;
   justify-items: center;
   width: 768px;
   margin: 30px auto;
+  .picker {
+    position: fixed;
+    top: 140px;
+    left: -176px;
+    z-index: 1;
+  }
 `
 
 export const StyleType = styled.h2`
