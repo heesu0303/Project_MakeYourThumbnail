@@ -70,12 +70,12 @@ img{
     --gray: #CDCDCD;
     --deep-gray: #B4B4B4;
     --super-gray: #767676;
+    --yellow: #f2f0b3;
 }
 
 html {
     background-color: var(--black);
     margin: 0 auto;
-    color: white;
 }
 
 .ir {
