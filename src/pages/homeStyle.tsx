@@ -16,10 +16,14 @@ export const Wrap = styled.article`
   margin: 50px auto;
   .picker {
     position: fixed;
-    top: -20px;
-    left: 220px;
     z-index: 1;
   }
+`
+
+export const PickerWrap = styled.div`
+  position: absolute;
+  top: 50px;
+  left: 122px;
 `
 
 export const Headline = styled.h1`
@@ -45,7 +49,13 @@ export const Thumbnail = styled.section<ThumbnailType>`
   width: 768px;
   height: 402px;
   margin: 30px auto;
-  background-color: ${(props) => (props.bgActive === '단색' ? props.bgColor : props.randomBg)};
+  background: ${(props) =>
+    (props.bgActive === '단색' && props.bgColor) ||
+    (props.bgActive === '랜덤' && props.randomBg) ||
+    (props.bgActive === '그라데이션' &&
+      `linear-gradient(${props.gradationStart}, ${props.gradationStop})`) ||
+    props.bgColor};
+
   color: ${(props) => (props.textActive === '단색' ? props.textColor : props.randomText)};
   &.active {
     text-shadow: 2px 2px 2px var(--deep-gray);

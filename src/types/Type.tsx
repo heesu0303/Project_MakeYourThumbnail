@@ -9,6 +9,8 @@ export interface ThumbnailType {
   bgColor: string
   randomText: string
   randomBg: string
+  gradationStart: string
+  gradationStop: string
   textActive: string
   bgActive: string
 }

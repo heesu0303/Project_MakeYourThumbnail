@@ -23,9 +23,11 @@ const Home = () => {
   const [bgColor, setBgColor] = useState<string>('#c0e9eb')
   const [randomTextColor, setRandomTextColor] = useState<string>('#000')
   const [randomBgColor, setRandomBgColor] = useState<string>('#c0e9eb')
+  const [gradationStart, setGradationStart] = useState<string>('#000')
+  const [gradationStop, setGradationStop] = useState<string>('#000')
 
   const titleTypes = ['제목', '제목/부제목', '제목/소제목', '제목/부제목/소제목']
-  const textTypes = ['단색', '랜덤', '그림자']
+  const textTypes = ['단색', '랜덤']
   const backgroundTypes = ['단색', '랜덤', '그라데이션', '이미지']
 
   // input값 변경에 따라 타이틀 value값 변경
@@ -37,20 +39,16 @@ const Home = () => {
     })
   }
 
-  // const handleChangeComplete = (color: { hex: React.SetStateAction<string> }) => {
-  //   setTextColor(color.hex)
-  // }
-
   // 랜덤 컬러 생성
   const getRandomColor = () => {
-    return '#' + Math.floor(Math.random() * 16777215).toString(16)
+    const hue = Math.floor(Math.random() * 360)
+    const saturation = Math.floor(Math.random() * 30) + 70
+    const lightness = Math.floor(Math.random() * 30) + 70
+    return `hsl(${hue}, ${saturation}%, ${lightness}%)`
   }
 
   // 텍스트 스타일 클릭시 상태값 변경
   const handleTextClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    if ((e.target as HTMLButtonElement).value === '그림자') {
-      setShadowActive(!shadowActive)
-    }
     if ((e.target as HTMLButtonElement).value === '랜덤') {
       setRandomTextColor(getRandomColor())
     }
@@ -64,6 +62,10 @@ const Home = () => {
   const handleBgClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if ((e.target as HTMLButtonElement).value === '랜덤') {
       setRandomBgColor(getRandomColor())
+    }
+    if ((e.target as HTMLButtonElement).value === '그라데이션') {
+      setGradationStart(getRandomColor())
+      setGradationStop(getRandomColor())
     }
     setBgActive(() => {
       return (e.target as HTMLButtonElement).value
@@ -80,6 +82,8 @@ const Home = () => {
         bgColor={bgColor}
         randomText={randomTextColor}
         randomBg={randomBgColor}
+        gradationStart={gradationStart}
+        gradationStop={gradationStop}
         textActive={textActive}
         bgActive={bgActive}
         className={shadowActive ? 'active' : ''}
@@ -159,16 +163,22 @@ const Home = () => {
             {item}
           </S.Button>
         ))}
+        <S.Button
+          className={shadowActive ? 'active' : ''}
+          onClick={() => setShadowActive(!shadowActive)}
+        >
+          그림자
+        </S.Button>
+        {textActive === '단색' && isTextActive && (
+          <S.PickerWrap>
+            <BlockPicker
+              color={textColor}
+              onChangeComplete={(color) => setTextColor(color.hex)}
+              className='picker'
+            />
+          </S.PickerWrap>
+        )}
       </S.ButtonSettings>
-      {textActive === '단색' && isTextActive && (
-        <div style={{ position: 'absolute' }}>
-          <BlockPicker
-            color={textColor}
-            onChangeComplete={(color) => setTextColor(color.hex)}
-            className='picker'
-          />
-        </div>
-      )}
 
       <S.ButtonSettings>
         <S.StyleType>배경 스타일</S.StyleType>
@@ -184,16 +194,16 @@ const Home = () => {
             {item}
           </S.Button>
         ))}
+        {bgActive === '단색' && isBgActive && (
+          <S.PickerWrap>
+            <BlockPicker
+              color={bgColor}
+              onChangeComplete={(color) => setBgColor(color.hex)}
+              className='picker'
+            />
+          </S.PickerWrap>
+        )}
       </S.ButtonSettings>
-      {bgActive === '단색' && isBgActive && (
-        <div style={{ position: 'absolute' }}>
-          <BlockPicker
-            color={bgColor}
-            onChangeComplete={(color) => setBgColor(color.hex)}
-            className='picker'
-          />
-        </div>
-      )}
     </S.Wrap>
   )
 }
