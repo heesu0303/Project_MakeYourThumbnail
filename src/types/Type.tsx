@@ -13,4 +13,5 @@ export interface ThumbnailType {
   gradationStop: string
   textActive: string
   bgActive: string
+  imgFile: string
 }

@@ -29,11 +29,12 @@ a {
     text-decoration: none;
 }
 
-input, button {
+input, button, label {
     background-color: transparent;
     border: none;
     outline: none;
     font-family: var(--font);
+    font-size: 14px;
     padding: 0;
     margin: 0;
     cursor: pointer;
@@ -47,10 +48,6 @@ textarea {
 
 ::placeholder {
   font-family: var(--font);
-}
-
-label {
-  color: var(--super-gray);
 }
 
 ol, ul, li {
@@ -71,6 +68,7 @@ img{
     --deep-gray: #B4B4B4;
     --super-gray: #767676;
     --yellow: #f2f0b3;
+    --greenblue: #59adb9;
 }
 
 html {
