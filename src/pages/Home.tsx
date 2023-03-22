@@ -9,18 +9,27 @@ const Home = () => {
     subtitle: '',
     subheading: '',
   })
+  const { title, subtitle, subheading } = inputs
+
   const [titleActive, setTitleActive] = useState<string>('')
-  const [textActive, setTextActive] = useState<boolean>(false)
-  const [dropActive, setDropActive] = useState<boolean>(false)
-  const [bgActive, setBgActive] = useState<boolean>(false)
+  const [textActive, setTextActive] = useState<string>('')
+  const [bgActive, setBgActive] = useState<string>('')
+
+  const [shadowActive, setShadowActive] = useState<boolean>(false)
+  const [isTextActive, setIsTextActive] = useState<boolean>(false)
+  const [isBgActive, setIsBgActive] = useState<boolean>(false)
+
   const [textColor, setTextColor] = useState<string>('#000')
-  const [backgroundColor, setBackgroundColor] = useState<string>('#c0e9eb')
+  const [bgColor, setBgColor] = useState<string>('#c0e9eb')
+  const [randomTextColor, setRandomTextColor] = useState<string>('#000')
+  const [randomBgColor, setRandomBgColor] = useState<string>('#c0e9eb')
 
   const titleTypes = ['제목', '제목/부제목', '제목/소제목', '제목/부제목/소제목']
-  // const backgroundTypes = ['배경 단색', '배경 랜덤', '배경 그라데이션', '이미지']
+  const textTypes = ['단색', '랜덤', '그림자']
+  const backgroundTypes = ['단색', '랜덤', '그라데이션', '이미지']
 
-  const { title, subtitle, subheading } = inputs
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // input값 변경에 따라 타이틀 value값 변경
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setInputs({
       ...inputs,
@@ -32,14 +41,48 @@ const Home = () => {
   //   setTextColor(color.hex)
   // }
 
+  // 랜덤 컬러 생성
+  const getRandomColor = () => {
+    return '#' + Math.floor(Math.random() * 16777215).toString(16)
+  }
+
+  // 텍스트 스타일 클릭시 상태값 변경
+  const handleTextClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    if ((e.target as HTMLButtonElement).value === '그림자') {
+      setShadowActive(!shadowActive)
+    }
+    if ((e.target as HTMLButtonElement).value === '랜덤') {
+      setRandomTextColor(getRandomColor())
+    }
+    setTextActive(() => {
+      return (e.target as HTMLButtonElement).value
+    })
+    setIsTextActive(!isTextActive)
+  }
+
+  // 배경 스타일 클릭시 상태값 변경
+  const handleBgClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    if ((e.target as HTMLButtonElement).value === '랜덤') {
+      setRandomBgColor(getRandomColor())
+    }
+    setBgActive(() => {
+      return (e.target as HTMLButtonElement).value
+    })
+    setIsBgActive(!isBgActive)
+  }
+
   return (
     <S.Wrap>
       <S.Headline>Make Your Thumbnail</S.Headline>
 
       <S.Thumbnail
-        color={textColor}
-        bgColor={backgroundColor}
-        className={dropActive ? 'active' : ''}
+        textColor={textColor}
+        bgColor={bgColor}
+        randomText={randomTextColor}
+        randomBg={randomBgColor}
+        textActive={textActive}
+        bgActive={bgActive}
+        className={shadowActive ? 'active' : ''}
       >
         <S.Title>{title ? title : '제목을 입력해주세요.'}</S.Title>
         <S.SubTitle
@@ -68,19 +111,19 @@ const Home = () => {
           name='title'
           placeholder='제목을 입력해주세요.'
           maxLength={40}
-          onChange={onChange}
+          onChange={handleInputChange}
         />
         <S.Input
           name='subtitle'
           placeholder='부제목을 입력해주세요.'
           maxLength={60}
-          onChange={onChange}
+          onChange={handleInputChange}
         />
         <S.Input
           name='subheading'
           placeholder='소제목을 입력해주세요.'
           maxLength={34}
-          onChange={onChange}
+          onChange={handleInputChange}
         />
       </S.InputSettings>
 
@@ -104,48 +147,53 @@ const Home = () => {
 
       <S.ButtonSettings>
         <S.StyleType>텍스트 스타일</S.StyleType>
-        <S.Button
-          className={textActive ? 'active' : ''}
-          onClick={() => (textActive ? setTextActive(false) : setTextActive(true))}
-        >
-          단색
-        </S.Button>
-        <div style={{ position: 'absolute' }}>
-          {textActive && (
-            <BlockPicker
-              color={textColor}
-              onChangeComplete={(color) => setTextColor(color.hex)}
-              className='picker'
-            />
-          )}
-        </div>
-
-        <S.Button
-          className={dropActive ? 'active' : ''}
-          onClick={() => (dropActive ? setDropActive(false) : setDropActive(true))}
-        >
-          그림자
-        </S.Button>
+        {textTypes.map((item) => (
+          <S.Button
+            key={item}
+            value={item}
+            className={item === textActive && isTextActive ? 'active' : ''}
+            onClick={(e) => {
+              handleTextClick(e)
+            }}
+          >
+            {item}
+          </S.Button>
+        ))}
       </S.ButtonSettings>
+      {textActive === '단색' && isTextActive && (
+        <div style={{ position: 'absolute' }}>
+          <BlockPicker
+            color={textColor}
+            onChangeComplete={(color) => setTextColor(color.hex)}
+            className='picker'
+          />
+        </div>
+      )}
 
       <S.ButtonSettings>
         <S.StyleType>배경 스타일</S.StyleType>
-        <S.Button
-          className={bgActive ? 'active' : ''}
-          onClick={() => (bgActive ? setBgActive(false) : setBgActive(true))}
-        >
-          단색
-        </S.Button>
-        <div style={{ position: 'absolute' }}>
-          {bgActive && (
-            <BlockPicker
-              color={backgroundColor}
-              onChangeComplete={(color) => setBackgroundColor(color.hex)}
-              className='picker'
-            />
-          )}
-        </div>
+        {backgroundTypes.map((item) => (
+          <S.Button
+            key={item}
+            value={item}
+            className={item === bgActive && isBgActive ? 'active' : ''}
+            onClick={(e) => {
+              handleBgClick(e)
+            }}
+          >
+            {item}
+          </S.Button>
+        ))}
       </S.ButtonSettings>
+      {bgActive === '단색' && isBgActive && (
+        <div style={{ position: 'absolute' }}>
+          <BlockPicker
+            color={bgColor}
+            onChangeComplete={(color) => setBgColor(color.hex)}
+            className='picker'
+          />
+        </div>
+      )}
     </S.Wrap>
   )
 }

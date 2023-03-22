@@ -5,6 +5,10 @@ export interface InputType {
 }
 
 export interface ThumbnailType {
-  color: string
+  textColor: string
   bgColor: string
+  randomText: string
+  randomBg: string
+  textActive: string
+  bgActive: string
 }

@@ -14,6 +14,12 @@ const ButtonActive = css`
 
 export const Wrap = styled.article`
   margin: 50px auto;
+  .picker {
+    position: fixed;
+    top: -20px;
+    left: 220px;
+    z-index: 1;
+  }
 `
 
 export const Headline = styled.h1`
@@ -39,8 +45,8 @@ export const Thumbnail = styled.section<ThumbnailType>`
   width: 768px;
   height: 402px;
   margin: 30px auto;
-  background-color: ${(props) => props.bgColor};
-  color: ${(props) => props.color};
+  background-color: ${(props) => (props.bgActive === '단색' ? props.bgColor : props.randomBg)};
+  color: ${(props) => (props.textActive === '단색' ? props.textColor : props.randomText)};
   &.active {
     text-shadow: 2px 2px 2px var(--deep-gray);
   }
@@ -50,6 +56,7 @@ export const Title = styled.h2`
   ${TextStyle}
   max-width: 80%;
   font-size: 40px;
+  font-weight: bold;
 `
 
 export const SubTitle = styled.h3`
@@ -90,12 +97,6 @@ export const ButtonSettings = styled.section`
   justify-items: center;
   width: 768px;
   margin: 30px auto;
-  .picker {
-    position: fixed;
-    top: 140px;
-    left: -176px;
-    z-index: 1;
-  }
 `
 
 export const StyleType = styled.h2`
