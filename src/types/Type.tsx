@@ -1,4 +1,11 @@
+export interface InputType {
+  width: number
+  height: number
+}
+
 export interface ThumbnailType {
+  width: number
+  height: number
   textColor: string
   bgColor: string
   randomText: string

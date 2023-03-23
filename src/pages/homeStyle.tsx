@@ -111,8 +111,8 @@ export const Thumbnail = styled.section<ThumbnailType>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 768px;
-  height: 402px;
+  width: ${(props) => props.width + 'px'};
+  height: ${(props) => props.height + 'px'};
   background: ${(props) =>
     (props.bgActive === '단색' && props.bgColor) ||
     (props.bgActive === '랜덤' && props.randomBg) ||
@@ -148,6 +148,52 @@ export const Thumbnail = styled.section<ThumbnailType>`
     max-width: 50%;
     bottom: 30px;
     font-size: 16px;
+  }
+`
+
+export const SizeInput = styled.input`
+  width: 70px;
+  height: 40px;
+  border-bottom: 1px solid white;
+  padding: 10px;
+  margin: 20px 10px;
+  color: white;
+  text-align: center;
+`
+
+export const Tooltip = styled.span`
+  visibility: hidden;
+  position: absolute;
+  left: 30px;
+  top: -8px;
+  width: 200px;
+  border-radius: 6px;
+  background-color: #444444;
+  color: #fff;
+  line-height: normal;
+  padding: 10px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 1;
+  ::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    right: 120px;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #444444 transparent transparent;
+  }
+`
+
+export const TooltipWrap = styled.div`
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  &:hover ${Tooltip} {
+    visibility: visible;
+    opacity: 1;
   }
 `
 
@@ -233,7 +279,7 @@ export const SaveButton = styled.button`
 
 // 하단 링크 스타일
 export const LinkWrap = styled.div`
-  padding: 5px 0 18px;
+  padding: 5px 0 20px;
 `
 
 export const Link = styled.a`

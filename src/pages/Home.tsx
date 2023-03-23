@@ -4,8 +4,15 @@ import { BlockPicker } from 'react-color'
 import domtoimage from 'dom-to-image'
 import { saveAs } from 'file-saver'
 import TextAreaAutoResize from 'react-textarea-autosize'
+import { InputType } from '../types/Type'
 
 const Home = () => {
+  const [inputs, setInputs] = useState<InputType>({
+    width: 768,
+    height: 402,
+  })
+  const { width, height } = inputs
+
   const [titleActive, setTitleActive] = useState<string>('')
   const [textActive, setTextActive] = useState<string>('')
   const [bgActive, setBgActive] = useState<string>('')
@@ -40,6 +47,15 @@ const Home = () => {
     const saturation = Math.floor(Math.random() * 30) + 70
     const lightness = Math.floor(Math.random() * 30) + 70
     return `hsl(${hue}, ${saturation}%, ${lightness}%)`
+  }
+
+  // input값 변경에 따라 타이틀 value값 변경
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setInputs({
+      ...inputs,
+      [name]: value,
+    })
   }
 
   // 텍스트 스타일 클릭시 상태값 변경
@@ -103,6 +119,8 @@ const Home = () => {
       <S.Section ref={scroll}>
         <S.ThumbnailWrap>
           <S.Thumbnail
+            width={width}
+            height={height}
             textColor={textColor}
             bgColor={bgColor}
             randomText={randomTextColor}
@@ -143,6 +161,25 @@ const Home = () => {
             />
           </S.Thumbnail>
         </S.ThumbnailWrap>
+
+        <div>
+          <S.SizeInput name='width' placeholder='width' onChange={handleInputChange} />
+          <S.SizeInput name='height' placeholder='height' onChange={handleInputChange} />
+          <S.TooltipWrap>
+            ❔
+            <S.Tooltip>
+              벨로그 : 768 x 402 (기본)
+              <br />
+              티스토리 : 230 x 300
+              <br />
+              유튜브 : 1280 x 720
+              <br />
+              트위터 : 400 x 400
+              <br />
+              인스타그램 : 1080 x 1080
+            </S.Tooltip>
+          </S.TooltipWrap>
+        </div>
 
         <S.ButtonSettings>
           <S.StyleType>⚡️ 구성</S.StyleType>
