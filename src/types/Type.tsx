@@ -8,4 +8,5 @@ export interface ThumbnailType {
   textActive: string
   bgActive: string
   imgFile: string
+  shadow: boolean
 }

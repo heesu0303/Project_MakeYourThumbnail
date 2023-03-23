@@ -112,17 +112,17 @@ const Home = () => {
             textActive={textActive}
             bgActive={bgActive}
             imgFile={imgFile}
-            className={shadowActive ? 'active' : ''}
+            shadow={shadowActive}
             ref={saveRef}
           >
             <h2 className='ir'>타이틀 폼</h2>
             <TextAreaAutoResize
-              className='title'
+              className='title-active title'
               maxLength={28}
               placeholder='제목을 입력해주세요.'
             />
             <TextAreaAutoResize
-              className='subtitle'
+              className='title-active subtitle'
               maxLength={30}
               placeholder='부제목을 입력해주세요.'
               style={
@@ -132,7 +132,7 @@ const Home = () => {
               }
             />
             <TextAreaAutoResize
-              className='subheading'
+              className='title-active subheading'
               maxLength={30}
               placeholder='소제목을 입력해주세요.'
               style={

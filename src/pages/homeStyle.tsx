@@ -113,7 +113,6 @@ export const Thumbnail = styled.section<ThumbnailType>`
   justify-content: center;
   width: 768px;
   height: 402px;
-  border: 1px solid blue;
   background: ${(props) =>
     (props.bgActive === '단색' && props.bgColor) ||
     (props.bgActive === '랜덤' && props.randomBg) ||
@@ -122,15 +121,18 @@ export const Thumbnail = styled.section<ThumbnailType>`
     (props.bgActive === '이미지' && `url(${props.imgFile}) no-repeat center`) ||
     props.randomBg};
   background-size: cover;
-  color: ${(props) => (props.textActive === '단색' ? props.textColor : props.randomText)};
-  &.active {
-    text-shadow: 2px 2px 2px #787878;
+
+  .title-active {
+    color: ${(props) => (props.textActive === '단색' ? props.textColor : props.randomText)};
+    text-shadow: ${(props) => props.shadow && '2px 2px 2px #787878'};
   }
   .title {
     ${TextStyle}
     max-width: 80%;
     font-size: 40px;
-    color: ${(props) => props.color};
+    &.active {
+      text-shadow: 2px 2px 2px #787878;
+    }
   }
   .subtitle {
     ${TextStyle}
@@ -148,59 +150,6 @@ export const Thumbnail = styled.section<ThumbnailType>`
     font-size: 16px;
   }
 `
-const titleStyle = css``
-
-// export const Title = styled.textarea`
-//   max-width: 80%;
-//   height: 50px;
-//   background-color: transparent;
-//   font-size: 40px;
-//   text-align: center;
-//   color: ${(props) => props.color};
-//   /* overflow: hidden; */
-//   border: 1px solid red;
-//   ::-webkit-scrollbar {
-//     display: none;
-//   }
-// `
-
-// export const SubTitle = styled(Title)`
-//   max-width: 70%;
-//   height: 40px;
-//   line-height: 40px;
-//   font-size: 24px;
-//   border-top: 1px solid ${(props) => props.color};
-//   margin-top: 20px;
-//   /* padding-top: 14px; */
-// `
-
-// export const SubHeading = styled(Title)`
-//   position: absolute;
-//   max-width: 50%;
-//   height: 28px;
-//   line-height: 28px;
-//   bottom: 30px;
-//   font-size: 16px;
-// `
-
-// input 스타일
-export const InputSettings = styled.section`
-  display: flex;
-  justify-content: space-between;
-  width: 768px;
-  @media all and (max-width: 770px) {
-    width: 100%;
-  }
-`
-
-export const Input = styled.input`
-  width: 210px;
-  height: 40px;
-  border-bottom: 1px solid white;
-  padding: 10px;
-  margin: 20px 10px;
-  color: white;
-`
 
 // 타입 제목
 export const StyleType = styled.h2`
@@ -208,17 +157,6 @@ export const StyleType = styled.h2`
   font-size: 14px;
   font-weight: bold;
   color: var(--deep-yellow);
-  /* ::before {
-    content: '';
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    width: 20px;
-    height: 20px;
-    background-color: #183ca7;
-    border-radius: 100%;
-    z-index: -1;
-  } */
   @media all and (max-width: 770px) {
     display: none;
   }
@@ -285,11 +223,9 @@ export const SaveButton = styled.button`
   background-color: var(--blue);
   transition-duration: 0.3s;
   :hover {
-    /* text-shadow: 3px 3px 0px var(--red); */
-    box-shadow: 3px 3px 0px #0f2f67;
+    box-shadow: 3px 3px 0px #395990;
   }
   :active {
-    /* text-shadow: inset 3px 3px 0px var(--red); */
     color: #d69f40;
     box-shadow: inset 3px 3px 0px #0f2f67;
   }
