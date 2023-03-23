@@ -1,18 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import * as S from './homeStyle'
 import { BlockPicker } from 'react-color'
-import type { InputType } from '../types/Type'
 import domtoimage from 'dom-to-image'
 import { saveAs } from 'file-saver'
+import TextAreaAutoResize from 'react-textarea-autosize'
 
 const Home = () => {
-  const [inputs, setInputs] = useState<InputType>({
-    title: '',
-    subtitle: '',
-    subheading: '',
-  })
-  const { title, subtitle, subheading } = inputs
-
   const [titleActive, setTitleActive] = useState<string>('')
   const [textActive, setTextActive] = useState<string>('')
   const [bgActive, setBgActive] = useState<string>('')
@@ -40,15 +33,6 @@ const Home = () => {
   const titleTypes = ['제목', '제목/부제목', '제목/소제목', '제목/부제목/소제목']
   const textTypes = ['단색', '랜덤']
   const backgroundTypes = ['단색', '랜덤', '그라데이션']
-
-  // input값 변경에 따라 타이틀 value값 변경
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setInputs({
-      ...inputs,
-      [name]: value,
-    })
-  }
 
   // 랜덤 컬러 생성
   const getRandomColor = () => {
@@ -131,52 +115,37 @@ const Home = () => {
             className={shadowActive ? 'active' : ''}
             ref={saveRef}
           >
-            <S.Title>{title ? title : '제목을 입력해주세요.'}</S.Title>
-            <S.SubTitle
+            <h2 className='ir'>타이틀 폼</h2>
+            <TextAreaAutoResize
+              className='title'
+              maxLength={28}
+              placeholder='제목을 입력해주세요.'
+            />
+            <TextAreaAutoResize
+              className='subtitle'
+              maxLength={30}
+              placeholder='부제목을 입력해주세요.'
               style={
                 titleActive === '제목' || titleActive === '제목/소제목'
                   ? { display: 'none' }
                   : { display: 'block' }
               }
-            >
-              {subtitle ? subtitle : '부제목을 입력해주세요.'}
-            </S.SubTitle>
-            <S.SubHeading
+            />
+            <TextAreaAutoResize
+              className='subheading'
+              maxLength={30}
+              placeholder='소제목을 입력해주세요.'
               style={
                 titleActive === '제목' || titleActive === '제목/부제목'
                   ? { display: 'none' }
                   : { display: 'block' }
               }
-            >
-              {subheading ? subheading : '소제목을 입력해주세요.'}
-            </S.SubHeading>
+            />
           </S.Thumbnail>
         </S.ThumbnailWrap>
 
-        <S.InputSettings>
-          <h2 className='ir'>제목 입력폼</h2>
-          <S.Input
-            name='title'
-            placeholder='제목을 입력해주세요.'
-            maxLength={40}
-            onChange={handleInputChange}
-          />
-          <S.Input
-            name='subtitle'
-            placeholder='부제목을 입력해주세요.'
-            maxLength={60}
-            onChange={handleInputChange}
-          />
-          <S.Input
-            name='subheading'
-            placeholder='소제목을 입력해주세요.'
-            maxLength={34}
-            onChange={handleInputChange}
-          />
-        </S.InputSettings>
-
         <S.ButtonSettings>
-          <S.StyleType>타이틀 구성</S.StyleType>
+          <S.StyleType>⚡️ 구성</S.StyleType>
           {titleTypes.map((item) => (
             <S.Button
               key={item}
@@ -194,7 +163,7 @@ const Home = () => {
         </S.ButtonSettings>
 
         <S.ButtonSettings>
-          <S.StyleType>텍스트 스타일</S.StyleType>
+          <S.StyleType>⚡️ 텍스트</S.StyleType>
           {textTypes.map((item) => (
             <S.Button
               key={item}
@@ -225,7 +194,7 @@ const Home = () => {
         </S.ButtonSettings>
 
         <S.ButtonSettings>
-          <S.StyleType>배경 스타일</S.StyleType>
+          <S.StyleType>⚡️ 배경</S.StyleType>
           {backgroundTypes.map((item) => (
             <S.Button
               key={item}

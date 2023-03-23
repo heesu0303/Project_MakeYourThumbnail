@@ -1,9 +1,3 @@
-export interface InputType {
-  title: string
-  subtitle: string
-  subheading: string
-}
-
 export interface ThumbnailType {
   textColor: string
   bgColor: string

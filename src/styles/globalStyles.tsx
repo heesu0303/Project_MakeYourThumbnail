@@ -44,10 +44,15 @@ textarea {
   font-family: var(--font);
   padding: 0;
   margin: 0;
+  border: none;
+  outline: none;
+  resize: none;
+  background-color: transparent;
 }
 
 ::placeholder {
   font-family: var(--font);
+  color: var(--deep-gray)
 }
 
 ol, ul, li {
@@ -69,7 +74,7 @@ img{
     --super-gray: #767676;
     --yellow: #f2f0b3;
     --deep-yellow: #f4bc58;
-    --greenblue: #59adb9;
+    --skyblue: #87c0cc;
     --blue: #183ca7;
 }
 
