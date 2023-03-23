@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import * as S from './homeStyle'
 import { BlockPicker } from 'react-color'
 import type { InputType } from '../types/Type'
@@ -32,6 +32,11 @@ const Home = () => {
   const imgRef = useRef<any>(null)
   const saveRef = useRef<any>(null)
 
+  const scroll = useRef<HTMLDivElement>(null)
+  const handleScroll = () => {
+    scroll.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
   const titleTypes = ['제목', '제목/부제목', '제목/소제목', '제목/부제목/소제목']
   const textTypes = ['단색', '랜덤']
   const backgroundTypes = ['단색', '랜덤', '그라데이션']
@@ -47,7 +52,7 @@ const Home = () => {
 
   // 랜덤 컬러 생성
   const getRandomColor = () => {
-    const hue = Math.floor(Math.random() * 360)
+    const hue = Math.floor(Math.random() * 900)
     const saturation = Math.floor(Math.random() * 30) + 70
     const lightness = Math.floor(Math.random() * 30) + 70
     return `hsl(${hue}, ${saturation}%, ${lightness}%)`
@@ -55,10 +60,10 @@ const Home = () => {
 
   // 텍스트 스타일 클릭시 상태값 변경
   const handleTextClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setIsTextActive(!isTextActive)
     if ((e.target as HTMLButtonElement).value === '랜덤') {
       setRandomTextColor(getRandomColor())
     }
-    setIsTextActive(!isTextActive)
     setTextActive(() => {
       return (e.target as HTMLButtonElement).value
     })
@@ -66,6 +71,7 @@ const Home = () => {
 
   // 배경 스타일 클릭시 상태값 변경
   const handleBgClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setIsBgActive(!isBgActive)
     if ((e.target as HTMLButtonElement).value === '랜덤') {
       setRandomBgColor(getRandomColor())
     }
@@ -73,7 +79,6 @@ const Home = () => {
       setGradationStart(getRandomColor())
       setGradationStop(getRandomColor())
     }
-    setIsBgActive(!isBgActive)
     setBgActive(() => {
       return (e.target as HTMLButtonElement).value
     })
@@ -103,150 +108,168 @@ const Home = () => {
 
   return (
     <S.Wrap>
-      <S.Headline>Make Your Thumbnail</S.Headline>
-      <div style={{ margin: '30px auto' }}>
-        <S.Thumbnail
-          textColor={textColor}
-          bgColor={bgColor}
-          randomText={randomTextColor}
-          randomBg={randomBgColor}
-          gradationStart={gradationStart}
-          gradationStop={gradationStop}
-          textActive={textActive}
-          bgActive={bgActive}
-          imgFile={imgFile}
-          className={shadowActive ? 'active' : ''}
-          ref={saveRef}
-        >
-          <S.Title>{title ? title : '제목을 입력해주세요.'}</S.Title>
-          <S.SubTitle
-            style={
-              titleActive === '제목' || titleActive === '제목/소제목'
-                ? { display: 'none' }
-                : { display: 'block' }
-            }
-          >
-            {subtitle ? subtitle : '부제목을 입력해주세요.'}
-          </S.SubTitle>
-          <S.SubHeading
-            style={
-              titleActive === '제목' || titleActive === '제목/부제목'
-                ? { display: 'none' }
-                : { display: 'block' }
-            }
-          >
-            {subheading ? subheading : '소제목을 입력해주세요.'}
-          </S.SubHeading>
-        </S.Thumbnail>
-      </div>
+      <S.Section>
+        <S.Headline>
+          Make Your
+          <br /> Thumbnail
+        </S.Headline>
+        <S.Mark onClick={handleScroll}>👇</S.Mark>
+      </S.Section>
 
-      <S.InputSettings>
-        <h2 className='ir'>제목 입력폼</h2>
-        <S.Input
-          name='title'
-          placeholder='제목을 입력해주세요.'
-          maxLength={40}
-          onChange={handleInputChange}
-        />
-        <S.Input
-          name='subtitle'
-          placeholder='부제목을 입력해주세요.'
-          maxLength={60}
-          onChange={handleInputChange}
-        />
-        <S.Input
-          name='subheading'
-          placeholder='소제목을 입력해주세요.'
-          maxLength={34}
-          onChange={handleInputChange}
-        />
-      </S.InputSettings>
+      <S.Section ref={scroll}>
+        <S.ThumbnailWrap>
+          <S.Thumbnail
+            textColor={textColor}
+            bgColor={bgColor}
+            randomText={randomTextColor}
+            randomBg={randomBgColor}
+            gradationStart={gradationStart}
+            gradationStop={gradationStop}
+            textActive={textActive}
+            bgActive={bgActive}
+            imgFile={imgFile}
+            className={shadowActive ? 'active' : ''}
+            ref={saveRef}
+          >
+            <S.Title>{title ? title : '제목을 입력해주세요.'}</S.Title>
+            <S.SubTitle
+              style={
+                titleActive === '제목' || titleActive === '제목/소제목'
+                  ? { display: 'none' }
+                  : { display: 'block' }
+              }
+            >
+              {subtitle ? subtitle : '부제목을 입력해주세요.'}
+            </S.SubTitle>
+            <S.SubHeading
+              style={
+                titleActive === '제목' || titleActive === '제목/부제목'
+                  ? { display: 'none' }
+                  : { display: 'block' }
+              }
+            >
+              {subheading ? subheading : '소제목을 입력해주세요.'}
+            </S.SubHeading>
+          </S.Thumbnail>
+        </S.ThumbnailWrap>
 
-      <S.ButtonSettings>
-        <S.StyleType>타이틀 구성</S.StyleType>
-        {titleTypes.map((item) => (
+        <S.InputSettings>
+          <h2 className='ir'>제목 입력폼</h2>
+          <S.Input
+            name='title'
+            placeholder='제목을 입력해주세요.'
+            maxLength={40}
+            onChange={handleInputChange}
+          />
+          <S.Input
+            name='subtitle'
+            placeholder='부제목을 입력해주세요.'
+            maxLength={60}
+            onChange={handleInputChange}
+          />
+          <S.Input
+            name='subheading'
+            placeholder='소제목을 입력해주세요.'
+            maxLength={34}
+            onChange={handleInputChange}
+          />
+        </S.InputSettings>
+
+        <S.ButtonSettings>
+          <S.StyleType>타이틀 구성</S.StyleType>
+          {titleTypes.map((item) => (
+            <S.Button
+              key={item}
+              value={item}
+              className={item === titleActive ? 'active' : ''}
+              onClick={(e) => {
+                setTitleActive(() => {
+                  return (e.target as HTMLInputElement).value
+                })
+              }}
+            >
+              {item}
+            </S.Button>
+          ))}
+        </S.ButtonSettings>
+
+        <S.ButtonSettings>
+          <S.StyleType>텍스트 스타일</S.StyleType>
+          {textTypes.map((item) => (
+            <S.Button
+              key={item}
+              value={item}
+              className={item === textActive && isTextActive ? 'active' : ''}
+              onClick={(e) => {
+                handleTextClick(e)
+              }}
+            >
+              {item}
+            </S.Button>
+          ))}
           <S.Button
-            key={item}
-            value={item}
-            className={item === titleActive ? 'active' : ''}
-            onClick={(e) => {
-              setTitleActive(() => {
-                return (e.target as HTMLInputElement).value
-              })
-            }}
+            className={shadowActive ? 'active' : ''}
+            onClick={() => setShadowActive(!shadowActive)}
           >
-            {item}
+            그림자
           </S.Button>
-        ))}
-      </S.ButtonSettings>
+          {textActive === '단색' && isTextActive && (
+            <S.PickerWrap>
+              <BlockPicker
+                color={textColor}
+                onChangeComplete={(color) => setTextColor(color.hex)}
+                className='picker'
+              />
+            </S.PickerWrap>
+          )}
+        </S.ButtonSettings>
 
-      <S.ButtonSettings>
-        <S.StyleType>텍스트 스타일</S.StyleType>
-        {textTypes.map((item) => (
-          <S.Button
-            key={item}
-            value={item}
-            className={item === textActive && isTextActive ? 'active' : ''}
-            onClick={(e) => {
-              handleTextClick(e)
+        <S.ButtonSettings>
+          <S.StyleType>배경 스타일</S.StyleType>
+          {backgroundTypes.map((item) => (
+            <S.Button
+              key={item}
+              value={item}
+              className={item === bgActive && isBgActive ? 'active' : ''}
+              onClick={(e) => {
+                handleBgClick(e)
+              }}
+            >
+              {item}
+            </S.Button>
+          ))}
+          <S.Label htmlFor='imageInput'>이미지</S.Label>
+          <S.ImageInput
+            type='file'
+            accept='image/*'
+            id='imageInput'
+            onChange={handleImgChange}
+            onClick={() => {
+              setBgActive('이미지')
             }}
-          >
-            {item}
-          </S.Button>
-        ))}
-        <S.Button
-          className={shadowActive ? 'active' : ''}
-          onClick={() => setShadowActive(!shadowActive)}
-        >
-          그림자
-        </S.Button>
-        {textActive === '단색' && isTextActive && (
-          <S.PickerWrap>
-            <BlockPicker
-              color={textColor}
-              onChangeComplete={(color) => setTextColor(color.hex)}
-              className='picker'
-            />
-          </S.PickerWrap>
-        )}
-      </S.ButtonSettings>
+            ref={imgRef}
+          />
+          {bgActive === '단색' && isBgActive && (
+            <S.PickerWrap>
+              <BlockPicker
+                color={bgColor}
+                onChangeComplete={(color) => setBgColor(color.hex)}
+                className='picker'
+              />
+            </S.PickerWrap>
+          )}
+        </S.ButtonSettings>
+        <S.SaveButton onClick={handleDownload}>Download</S.SaveButton>
 
-      <S.ButtonSettings>
-        <S.StyleType>배경 스타일</S.StyleType>
-        {backgroundTypes.map((item) => (
-          <S.Button
-            key={item}
-            value={item}
-            className={item === bgActive && isBgActive ? 'active' : ''}
-            onClick={(e) => {
-              handleBgClick(e)
-            }}
-          >
-            {item}
-          </S.Button>
-        ))}
-        <S.Label htmlFor='imageInput'>이미지</S.Label>
-        <S.ImageInput
-          type='file'
-          accept='image/*'
-          id='imageInput'
-          onChange={handleImgChange}
-          onClick={() => {
-            setBgActive('이미지')
-          }}
-          ref={imgRef}
-        />
-        {bgActive === '단색' && isBgActive && (
-          <S.PickerWrap>
-            <BlockPicker
-              color={bgColor}
-              onChangeComplete={(color) => setBgColor(color.hex)}
-              className='picker'
-            />
-          </S.PickerWrap>
-        )}
-      </S.ButtonSettings>
-      <S.SaveButton onClick={handleDownload}>Download</S.SaveButton>
+        <S.LinkWrap>
+          <S.Link href='https://github.com/heesu0303' target='_black'>
+            GitHub
+          </S.Link>
+          <S.Link href='https://velog.io/@heesu0303' target='_black'>
+            velog
+          </S.Link>
+        </S.LinkWrap>
+      </S.Section>
     </S.Wrap>
   )
 }

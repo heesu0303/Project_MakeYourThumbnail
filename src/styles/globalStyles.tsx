@@ -68,12 +68,20 @@ img{
     --deep-gray: #B4B4B4;
     --super-gray: #767676;
     --yellow: #f2f0b3;
+    --deep-yellow: #f4bc58;
     --greenblue: #59adb9;
+    --blue: #183ca7;
 }
 
 html {
     background-color: var(--black);
     margin: 0 auto;
+    height: 100vh;
+}
+
+body {
+    margin: 0;
+    overflow-y: hidden;
 }
 
 .ir {
