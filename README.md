@@ -11,7 +11,8 @@
 > 프로젝트 기간 : 2023.03.20 - 2023.03.24 <br/>
 
 기술 블로그의 썸네일, 유튜브의 썸네일, 막상 만들려면 너무 번거롭잖아요!
-그래서 만들었습니다. 필요한 것만 있는, 1분이면 뚝딱 만드는 썸네일 자판기!
+그래서 만들었습니다. <br/>
+필요한 것만 있는, 1분이면 뚝딱 만드는 썸네일 자판기
 
 <br/>
 
@@ -66,6 +67,10 @@ npm start
 - [ ] 상태 관리 값 최소화
 - [ ] 다양한 편집 기능 추가
 
-<br/>
+<br/><br/>
 
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fgjbae1212%2Fhit-counter&count_bg=%237893E3&title_bg=%23F7D393&icon=&icon_color=%23E9C4C4&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+<div align="right">
+
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://github.com/heesu0303/Project_MakeYourThumbnail%2Fgjbae1212%2Fhit-counter&count_bg=%237893E3&title_bg=%23F7D393&icon=&icon_color=%23E9C4C4&title=hits&edge_flat=false)](https://github.com/heesu0303)
+
+</div>
