@@ -175,7 +175,7 @@ export const Tooltip = styled.span`
   position: absolute;
   left: 30px;
   top: -34px;
-  width: 200px;
+  width: 210px;
   border-radius: 6px;
   background-color: var(--super-yellow);
   color: #fff;
@@ -188,7 +188,7 @@ export const Tooltip = styled.span`
     content: '';
     position: absolute;
     top: 34px;
-    right: 200px;
+    right: 210px;
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
