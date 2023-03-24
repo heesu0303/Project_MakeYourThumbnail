@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/Project_MakeYourThumbnail/static/js/main.86b9a67b.js",
+    "main.js": "/Project_MakeYourThumbnail/static/js/main.a50139ca.js",
     "index.html": "/Project_MakeYourThumbnail/index.html",
-    "main.86b9a67b.js.map": "/Project_MakeYourThumbnail/static/js/main.86b9a67b.js.map"
+    "main.a50139ca.js.map": "/Project_MakeYourThumbnail/static/js/main.a50139ca.js.map"
   },
   "entrypoints": [
-    "static/js/main.86b9a67b.js"
+    "static/js/main.a50139ca.js"
   ]
 }
