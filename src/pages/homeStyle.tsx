@@ -126,7 +126,7 @@ export const Thumbnail = styled.section<ThumbnailType>`
     color: ${(props) => (props.textActive === '단색' ? props.textColor : props.randomText)};
     text-shadow: ${(props) => props.shadow && '2px 2px 2px #787878'};
     ::placeholder {
-      color: #000;
+      color: ${(props) => (props.textActive === '단색' ? props.textColor : props.randomText)};
     }
   }
   .title {
