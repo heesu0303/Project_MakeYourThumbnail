@@ -16,4 +16,5 @@ export interface ThumbnailType {
   bgActive: string
   imgFile: string
   shadow: boolean
+  fontSize: number
 }

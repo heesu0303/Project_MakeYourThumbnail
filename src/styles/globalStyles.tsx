@@ -74,8 +74,10 @@ img{
     --super-gray: #767676;
     --yellow: #f2f0b3;
     --deep-yellow: #f4bc58;
+    --super-yellow: #d69f40;
     --skyblue: #87c0cc;
     --blue: #183ca7;
+    --deep-blue:#0f2f67;
 }
 
 html {

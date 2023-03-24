@@ -17,10 +17,12 @@ const Home = () => {
   const [textActive, setTextActive] = useState<string>('')
   const [bgActive, setBgActive] = useState<string>('')
 
-  const [shadowActive, setShadowActive] = useState<boolean>(false)
   const [isTextActive, setIsTextActive] = useState<boolean>(false)
   const [isBgActive, setIsBgActive] = useState<boolean>(false)
+  const [shadowActive, setShadowActive] = useState<boolean>(false)
+  const [fontActive, setFontActive] = useState<boolean>(false)
 
+  const [fontSize, setFontSize] = useState<number>(40)
   const [textColor, setTextColor] = useState<string>('#000')
   const [bgColor, setBgColor] = useState<string>('#c0e9eb')
   const [randomTextColor, setRandomTextColor] = useState<string>('#050303')
@@ -40,6 +42,7 @@ const Home = () => {
   const titleTypes = ['제목', '제목/부제목', '제목/소제목', '제목/부제목/소제목']
   const textTypes = ['단색', '랜덤']
   const backgroundTypes = ['단색', '랜덤', '그라데이션']
+  const fontTypes = [12, 16, 20, 24, 28, 32, 36, 40]
 
   // 랜덤 컬러 생성
   const getRandomColor = () => {
@@ -56,6 +59,11 @@ const Home = () => {
       ...inputs,
       [name]: value,
     })
+  }
+
+  // 텍스트 사이즈
+  function handleFontSizeChange(newSize: number) {
+    setFontSize(newSize)
   }
 
   // 텍스트 스타일 클릭시 상태값 변경
@@ -131,6 +139,7 @@ const Home = () => {
             bgActive={bgActive}
             imgFile={imgFile}
             shadow={shadowActive}
+            fontSize={fontSize}
             ref={saveRef}
           >
             <h2 className='ir'>타이틀 폼</h2>
@@ -213,6 +222,21 @@ const Home = () => {
               {item}
             </S.Button>
           ))}
+          <S.Button
+            className={fontActive ? 'active' : ''}
+            onClick={() => setFontActive(!fontActive)}
+          >
+            크기
+            {fontActive && (
+              <S.DropList>
+                {fontTypes.map((item) => (
+                  <S.DropSize key={item} onClick={() => handleFontSizeChange(item)}>
+                    {item}px
+                  </S.DropSize>
+                ))}
+              </S.DropList>
+            )}
+          </S.Button>
           <S.Button
             className={shadowActive ? 'active' : ''}
             onClick={() => setShadowActive(!shadowActive)}

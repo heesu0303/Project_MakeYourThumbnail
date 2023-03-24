@@ -125,11 +125,14 @@ export const Thumbnail = styled.section<ThumbnailType>`
   .title-active {
     color: ${(props) => (props.textActive === '단색' ? props.textColor : props.randomText)};
     text-shadow: ${(props) => props.shadow && '2px 2px 2px #787878'};
+    ::placeholder {
+      color: #000;
+    }
   }
   .title {
     ${TextStyle}
     max-width: 80%;
-    font-size: 40px;
+    font-size: ${(props) => props.fontSize + 'px'};
     &.active {
       text-shadow: 2px 2px 2px #787878;
     }
@@ -151,6 +154,7 @@ export const Thumbnail = styled.section<ThumbnailType>`
   }
 `
 
+// 사이즈 입력 폼
 export const SizeInput = styled.input`
   width: 70px;
   height: 40px;
@@ -159,16 +163,21 @@ export const SizeInput = styled.input`
   margin: 20px 10px;
   color: white;
   text-align: center;
+  :hover,
+  :focus {
+    border-bottom: 1px solid var(--deep-yellow);
+  }
 `
 
+// 툴팁 기능
 export const Tooltip = styled.span`
   visibility: hidden;
   position: absolute;
   left: 30px;
-  top: -8px;
+  top: -34px;
   width: 200px;
   border-radius: 6px;
-  background-color: #444444;
+  background-color: var(--super-yellow);
   color: #fff;
   line-height: normal;
   padding: 10px;
@@ -178,12 +187,12 @@ export const Tooltip = styled.span`
   ::after {
     content: '';
     position: absolute;
-    top: 8px;
-    right: 120px;
+    top: 34px;
+    right: 200px;
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: transparent #444444 transparent transparent;
+    border-color: transparent var(--super-yellow) transparent transparent;
   }
 `
 
@@ -193,7 +202,7 @@ export const TooltipWrap = styled.div`
   cursor: pointer;
   &:hover ${Tooltip} {
     visibility: visible;
-    opacity: 1;
+    opacity: 0.9;
   }
 `
 
@@ -238,18 +247,40 @@ const ButtonStyle = css`
   border-radius: 20px;
   color: white;
   font-weight: bold;
+  &.active,
   :hover {
-    ${ButtonActive}
-  }
-  &.active {
     ${ButtonActive};
   }
 `
 
 export const Button = styled.button`
-  ${ButtonStyle}
+  ${ButtonStyle};
+  position: relative;
 `
 
+// 드롭박스
+export const DropList = styled.ul`
+  position: absolute;
+  top: 120%;
+  left: 0;
+  width: 140px;
+  height: 140px;
+  background-color: var(--black);
+  border: 2px solid white;
+  border-radius: 20px;
+  z-index: 1;
+  overflow: auto;
+`
+
+export const DropSize = styled.li`
+  padding: 8px 16px;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--deep-yellow);
+  }
+`
+
+// 배경 이미지
 export const Label = styled.label`
   ${ButtonStyle}
   text-align: center;
@@ -268,12 +299,10 @@ export const SaveButton = styled.button`
   color: var(--deep-yellow);
   background-color: var(--blue);
   transition-duration: 0.3s;
-  :hover {
-    box-shadow: 3px 3px 0px #395990;
-  }
+  :hover,
   :active {
-    color: #d69f40;
-    box-shadow: inset 3px 3px 0px #0f2f67;
+    color: var(--super-yellow);
+    box-shadow: inset 4px 4px 0px var(--deep-blue);
   }
 `
 
